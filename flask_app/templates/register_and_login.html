@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+                <!-- {% with gen_messages = get_flashed_messages(category_filter=['general_error']) %} -->
+                            <!-- {% if gen_messages %} -->
+                            <div class="row mt-3 justify-content-center">
+                                <div class="col-3 card mb-2" style="background-color: #f7d6d9;">
+                                    <div class="card-body text-danger">
+                                        <!-- {% for msg in gen_messages %} -->
+                                        <h6 class="card-subtitle mb-1 text-center">{{msg}}</h6>
+                                        <!-- <h6 class="card-subtitle mb-1 text-center">{{msg}}</h6> -->
+                                        <!-- {% endfor %} -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- {% endif %} -->
+                        <!-- {% endwith %} -->
+                <div class="row justify-content-around align-items-center mt-3">
+                    <div class="col-5">
+                        <div class="box bg-dark p-4 ">
+                            <h1 class="text-primary">Register</h1>
+                            <!-- {% with reg_messages = get_flashed_messages(category_filter=['registration_error']) %} -->
+                                    <!-- {% if reg_messages %} -->
+                                    <div class="card mb-2" style="background-color: #f7d6d9;">
+                                        <div class="card-body text-danger">
+                                            <!-- {% for msg in reg_messages %} -->
+                                            <h6 class="card-subtitle mb-1">{{msg}}</h6>
+                                            <!-- <h6 class="card-subtitle mb-1">{{msg}}</h6> -->
+                                        <!-- {% endfor %} -->
+                                        </div>
+                                    </div>
+                                    <!-- {% endif %} -->
+                            <!-- {% endwith %} -->
+                                    
+                                    <form action="/process-register" method="post" id="form1">
+                                <div class="mb-2 text-white">
+                                    <label for="first_name" class="form-label">First Name:</label>
+                                    <input type="text" name="first_name"  class="form-control">
+                                </div>
+                                <div class="mb-2 text-white">
+                                    <label for="last_name" class="form-label">Last Name:</label>
+                                    <input type="text" name="last_name"  class="form-control">
+                                </div>
+                                <div class="mb-2 text-white">
+                                    <label for="email" class="form-label">Email:</label>
+                                    <input type="email" name="email" class="form-control">
+                                </div>
+                                <div class="mb-2 text-white">
+                                    <label for="password" class="form-label">Password:</label>
+                                    <input type="password" name="password"  class="form-control">
+                                </div>
+                                <div class="mb-2 text-white">
+                                    <label for="confirm_password" class="form-label">Confirm Password:</label>
+                                    <input type="password" name="confirm_password"  class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-primary mt-2"> Register </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="box bg-dark p-4 ">
+                                <h1 class="text-warning">Login</h1>
+                                <!-- {% with log_messages = get_flashed_messages(category_filter=['login_error']) %} -->
+                                    <!-- {% if log_messages %} -->
+                                    <div class="card mb-2" style="background-color: #f7d6d9;">
+                                        <div class="card-body text-danger">
+                                            <!-- {% for msg in log_messages %} -->
+                                            <h6 class="card-subtitle mb-1">{{msg}}</h6>
+                                            <!-- <h6 class="card-subtitle mb-1">{{msg}}</h6> -->
+                                        <!-- {% endfor %} -->
+                                        </div>
+                                    </div>
+                                    <!-- {% endif %} -->
+                            <!-- {% endwith %} -->
+                                    
+                                <form action="/process-login" method="post" id="form2">
+                                    <div class="mb-2 text-white">
+                                        <label for="email" class="form-label">Email:</label>
+                                        <input type="email" name="email"  class="form-control">
+                                    </div>
+                                    <div class="mb-2 text-white">
+                                        <label for="password" class="form-label">Password:</label>
+                                        <input type="text" name="password" class="form-control">
+                                    </div>
+                                    <button type="submit" class="btn btn-warning mt-2"> Login </button>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</body>
+</html>

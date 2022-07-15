@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid justify-content-between">
+                <h1 class="text-warning">Welcome, {{session.first_name}}!</h1>
+                <div class="justify-content-end">
+                    <a class="navbar-brand" href="/recipes">Home</a>
+                    <a class="navbar-brand" href="/recipes/new">+ Create</a>
+                    <a class="navbar-brand" href="/process-logout">Logout</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row align-items-center">
+            <div class="col-8 m-3">
+                <h1 class="text-primary">{{recipe.name}}</h1>
+            </div>
+            <div class="col-3">
+                <h3 class="text-dark">Posted by: {{recipe.first_name}}</h3>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-10">
+                <table class="table table-hover">
+                    <tr>
+                        <th class="table-secondary">Description:</th>
+                        <td class="table-light">{{recipe.description}}</td>
+                    </tr>
+                    <tr>
+                        <th class="table-secondary">Under 30 Minutes?</th>
+                        <td class="table-light">{{recipe.under_30}}</td>
+                    </tr>
+                    <tr>
+                        <th class="table-secondary">Instructions:</th>
+                        <td class="table-light">{{recipe.instructions}}</td>
+                    </tr>
+                    <tr>
+                        <th class="table-secondary">Date Made:</th>
+                        <td class="table-light">{{recipe.date_cooked_at}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Espacio para los flash messages -->
+
+
+    </div>
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</body>
+</html>

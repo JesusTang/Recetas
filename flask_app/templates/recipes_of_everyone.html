@@ -1,0 +1,57 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid justify-content-between">
+                <h1 class="text-warning">Welcome {{session.first_name}} {{session.last_name}}!</h1>
+                <div class="justify-content-end">
+                    <a class="navbar-brand" href="/recipes">Home</a>
+                    <a class="navbar-brand" href="/recipes/new">+ Create</a>
+                    <a class="navbar-brand" href="/process-logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    <div class="row mt-4 d-flex justify-content-center">
+        <div class="col-10">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr class="bg-dark bg-opacity-25">
+                        <th>Name</th>
+                        <th>Under 30 min</th>
+                        <th>Posted By</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                {% if recipes %}
+                    {% for recipe in recipes %}
+                    <tr>
+                        <td>{{recipe.name}}</td>
+                        <td>{{recipe.under_30}}</td>
+                        <td>{{recipe.first_name}} {{recipe.last_name}}</td>
+                        <td>
+                            <a href="/recipes/{{recipe.id}}">view recipe</a>
+                            {% if session.id == recipe.user_id %}
+                            | <a href="/recipes/edit/{{recipe.id}}"> edit </a> | <a href="/delete-recipe-{{recipe.id}}"> delete </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+            </table>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</body>
+</html>
