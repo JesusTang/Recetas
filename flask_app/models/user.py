@@ -1,4 +1,3 @@
-from turtle import isvisible
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
 import re
@@ -94,10 +93,6 @@ class User:
             return is_valid
         if not User.get_by_email(data):
             flash(u"Email doesn't exist!", 'login_error')
-            is_valid = False
-            return is_valid
-        if not str(data['password']) == str((User.get_by_email(data))[0].password):
-            flash(u"Password is incorrect", 'login_error')
             is_valid = False
             return is_valid
         return is_valid

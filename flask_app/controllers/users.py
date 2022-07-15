@@ -1,7 +1,10 @@
 from flask_app import app
 from flask import render_template,redirect,request, flash, session
+from flask_bcrypt import Bcrypt
 from flask_app.models.recipe import Recipe 
 from flask_app.models.user import User
+bcrypt = Bcrypt(app)
+
 
 @app.route("/")
 def log_and_reg():
@@ -9,15 +12,17 @@ def log_and_reg():
 
 @app.route("/process-register", methods=['POST'])
 def process_register():
+    if not User.validate_user_for_registration(request.form):
+        return redirect('/')
+    pw_hash = bcrypt.generate_password_hash(request.form['password'])
+    confirm_pw_hash = bcrypt.generate_password_hash(request.form['confirm_password'])
     data = {
         'first_name': request.form['first_name'],
         'last_name': request.form['last_name'],
         'email': request.form['email'],
-        'password': request.form['password'],
-        'confirm_password': request.form['confirm_password']
+        'password': pw_hash,
+        'confirm_password': confirm_pw_hash
     }
-    if not User.validate_user_for_registration(data):
-        return redirect('/')
     id = User.save_into_db(data)
     print(id)
     data = {
@@ -36,7 +41,12 @@ def process_login():
         'email': request.form['email'],
         'password': request.form['password']
     }
+    user_in_db = User.get_by_email(data)
     if not User.validate_user_for_login(data):
+        return redirect('/')
+    if not bcrypt.check_password_hash(user_in_db[0].password, request.form['password']):
+        # si obtenemos False después de verificar la contraseña
+        flash(u"Invalid password", 'login_error')
         return redirect('/')
     user = User.get_by_email(data)
     print(user)
