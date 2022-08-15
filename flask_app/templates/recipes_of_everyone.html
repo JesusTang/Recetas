@@ -20,13 +20,14 @@
         </div>
     <div class="row mt-4 d-flex justify-content-center">
         <div class="col-10">
-            <table class="table table-striped table-hover">
+            <table class="table table-striped table-hover text-center">
                 <thead>
                     <tr class="bg-dark bg-opacity-25">
                         <th>Name</th>
                         <th>Under 30 min</th>
                         <th>Posted By</th>
                         <th>Actions</th>
+                        <th></th>
                     </tr>
                 </thead>
                 {% if recipes %}
@@ -39,6 +40,19 @@
                             <a href="/recipes/{{recipe.id}}">view recipe</a>
                             {% if session.id == recipe.user_id %}
                             | <a href="/recipes/edit/{{recipe.id}}"> edit </a> | <a href="/delete-recipe-{{recipe.id}}"> delete </a>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if user.recipes_liked %}
+                                
+                                    {% if recipe.id in list_of_recipes_liked %}
+                                        <a href="/remove-like-{{recipe.id}}">unlike</a>
+                                    {% else %}
+                                        <a href="/add-like-{{recipe.id}}">like</a>
+                                    {% endif %}
+                                
+                            {% else %}
+                                <a href="/add-like-{{recipe.id}}">like</a>
                             {% endif %}
                         </td>
                     </tr>

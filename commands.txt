@@ -1,0 +1,47 @@
+[Unit]
+Description=Gunicorn instance
+After=network.target
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/Recetas
+Environment="PATH=/home/ubuntu/Recetas/venv/bin"
+ExecStart=/home/ubuntu/Recetas/venv/bin/gunicorn --workers 3 --bind unix:Recetas.sock -m 007 wsgi:application
+[Install]
+WantedBy=multi-user.target
+
+
+server {
+    listen 80;
+    server_name 18.234.46.211;
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/ubuntu/Recetas/Recetas.sock;
+    }
+}
+
+server {
+    listen 80;
+    server_name 3.83.190.193;
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/ubuntu/Recetas/Recetas.sock;
+    }
+}
+
+
+
+
+
+[Unit]
+Description=Gunicorn instance
+After=network.target
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/Recetas
+Environment="PATH=/home/ubuntu/Recetas/venv/bin"
+ExecStart=/home/ubuntu/Recetas/venv/bin/gunicorn --workers 3 --bind unix:Recetas.sock -m 007 wsgi:application
+[Install]
+WantedBy=multi-user.target
+

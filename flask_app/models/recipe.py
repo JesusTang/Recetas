@@ -1,5 +1,6 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
+from flask_app.models import user
 import re
 
 NAME_REGEX = re.compile(r'^[a-zA-Z]') 
@@ -11,16 +12,39 @@ class Recipe:
         self.description = data['description']
         self.instructions = data['instructions']
         self.date_cooked_at = data['date_cooked_at']
+        self.under_30 = data['under_30']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
+
+# This is the section where the data of the user who made it is parsed in to extract name and id for session and display of the name of said user
+        self.first_name = data['first_name']
+        self.last_name = data['last_name']
+        self.user_id = data['user_id']
+# End of section
+
+        self.users_liked = []
 
     @classmethod
     def get_recipes_with_users( cls ):
         query = """
         SELECT * FROM recipes 
         JOIN users ON recipes.user_id = users.id;"""
-        results_dict = connectToMySQL('recetas').query_db( query )
-        return results_dict
+        results = connectToMySQL('recetas').query_db( query )
+        recipes = []
+        for recipe in results:
+            recipes.append(cls(recipe))
+        return recipes
+
+    @classmethod
+    def get_one_recipe_with_user( cls, data ):
+        query = """
+        SELECT * FROM recipes 
+        JOIN users ON recipes.user_id = users.id
+        WHERE recipes.id = %(id)s;"""
+        results = connectToMySQL('recetas').query_db( query , data)
+        recipe = cls(results[0])
+        return recipe
+        
 
     @classmethod
     def save_into_db(cls, data ):
@@ -47,12 +71,28 @@ class Recipe:
         return result_is_none
 
     @classmethod
-    def get_recipe_with_users_by_id(cls, data ):
+    def get_by_id(cls,data):
         query = """
-        SELECT * FROM recipes JOIN users ON recipes.user_id = users.id WHERE recipes.id = %(id)s;"""
-        result_dict = connectToMySQL('recetas').query_db( query, data )
-        return result_dict
-
+        SELECT * FROM recipes 
+        LEFT JOIN likes ON recipes.id = likes.recipe_id 
+        LEFT JOIN users ON users.id = likes.user_id 
+        WHERE recipes.id = %(id)s;"""
+        results = connectToMySQL('recetas').query_db(query,data)
+        recipe = cls(results[0])
+        for row in results:
+            if row['users.id'] == None:
+                break
+            data = {
+                "id": row['users.id'],
+                'first_name' : row['first_name'],
+                'last_name' : row['last_name'],
+                'email' : row['email'],
+                'password' : row['password'],
+                'created_at' : row['created_at'],
+                'updated_at' : row['updated_at'],
+            }
+            recipe.users_liked.append(user.User(data))
+        return recipe
 
     @staticmethod
     def validate_recipe(data):

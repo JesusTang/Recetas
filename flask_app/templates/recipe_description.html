@@ -10,7 +10,7 @@
     <div class="container">
         <div class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid justify-content-between">
-                <h1 class="text-warning">Welcome, {{session.first_name}}!</h1>
+                <h1 class="text-warning">Welcome {{session.first_name}} {{session.last_name}}!</h1>
                 <div class="justify-content-end">
                     <a class="navbar-brand" href="/recipes">Home</a>
                     <a class="navbar-brand" href="/recipes/new">+ Create</a>
@@ -20,11 +20,14 @@
         </div>
 
         <div class="row align-items-center">
-            <div class="col-8 m-3">
+            <div class="col-5 m-3">
                 <h1 class="text-primary">{{recipe.name}}</h1>
             </div>
             <div class="col-3">
                 <h3 class="text-dark">Posted by: {{recipe.first_name}}</h3>
+            </div>
+            <div class="col-2">
+                <h3 class="text-dark">Liked by: {{number_of_likes}}</h3>
             </div>
         </div>
         <div class="row justify-content-center">
